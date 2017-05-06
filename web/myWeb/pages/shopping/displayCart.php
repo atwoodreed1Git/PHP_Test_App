@@ -12,7 +12,7 @@ include '../menu.php';
 
 echo "	<main>
 	
-	<h1 class=\"white-text\">Check Out </h1>
+	<h1 class=\"white-text\">Cart </h1>
 	</main>
 </body>
 </html>";

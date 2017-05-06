@@ -1,9 +1,12 @@
 <?php 
 
 include 'head.php';
+
+echo " <body>";
+
 include 'menu.php';
 
-echo "	<main>
+echo "	<main class=\"white\">
 		<div>
 			<p class=\"courier bold bglightblue\">Our Mission:</p>
 			<hr/>
