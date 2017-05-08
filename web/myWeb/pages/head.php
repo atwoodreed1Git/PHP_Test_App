@@ -7,7 +7,7 @@ if ($_SERVER["HTTP_HOST"] == "localhost") {
 }
 else
 {
-	$baseDir = "myWeb/";
+	$baseDir = "/myWeb/";
 }
 
 
