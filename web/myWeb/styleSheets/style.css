@@ -30,6 +30,10 @@ header, main, footer, head {
    color: black;
    padding: 10px;
 }
+.bl-border {
+   border: 15px solid black;
+   margin-top: 5px;
+}
 .fontVerdana {
    font-family: "Verdana, sans-serif";
    color: black;

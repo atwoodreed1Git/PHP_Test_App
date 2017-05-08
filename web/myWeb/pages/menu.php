@@ -35,19 +35,19 @@ echo "									<a href=\"$baseDir"."pages/shopping/donationItems.php\">Donations
 ?>
 								<li class="<?php if ($curPage == "displayCart") echo 'active'?>">
 <?php
-echo "									<a href=\"$baseDir"."pages/shopping/cart.php\">Cart</a>
+echo "									<a href=\"$baseDir"."pages/shopping/displayCart.php\">Cart</a>
 								</li>
 ";
 ?>
 								<li class="<?php if ($curPage == "checkout") echo 'active'?>">
 <?php
-echo "									<a href=\"$baseDir"."pages/shopping/cart.php\">Check Out</a>
+echo "									<a href=\"$baseDir"."pages/shopping/checkout.php\">Check Out</a>
 								</li>
 ";
 ?>
 								<li class="<?php if ($curPage == "conformation") echo 'active'?>">
 <?php
-echo "									<a href=\"$baseDir"."pages/shopping/cart.php\">Conformation</a>
+echo "									<a href=\"$baseDir"."pages/shopping/conformation.php\">Conformation</a>
 								</li>
 								<li class=\"divider\"></li>
 							</ul>
