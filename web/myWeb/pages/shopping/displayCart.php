@@ -98,6 +98,7 @@ echo "			</tbody>
 
 			document.getElementById("cartTable").deleteRow(i+1);
 
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -109,6 +110,7 @@ echo "			</tbody>
 			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -120,6 +122,7 @@ echo "			</tbody>
 			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -131,6 +134,7 @@ echo "			</tbody>
 			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -142,6 +146,7 @@ echo "			</tbody>
 			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -153,6 +158,7 @@ echo "			</tbody>
 			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
+			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 
