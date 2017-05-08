@@ -10,7 +10,7 @@ echo "	<main class=\"white\">
 		<div>
 			<p class=\"courier bold bglightblue\">Our Mission:</p>
 			<hr/>
-
+	
 			<img id=\"sad_pic\" src = \"$baseDir"."pics/sad.jpg\" alt = \"sad\"/>
 
 			<p class=\"fontVerdana\">

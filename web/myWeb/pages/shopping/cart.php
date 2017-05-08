@@ -15,6 +15,7 @@ if (isset($_POST['postid']))
 		if ($i_idd == $val["item_id"])
 		{
 			$_SESSION["shopCart"][$key]["item_quantity"] += 1;
+			
 			echo "Quantity = " . $_SESSION["shopCart"][$key]["item_quantity"];
 		}
 	}
