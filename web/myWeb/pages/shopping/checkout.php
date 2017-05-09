@@ -1,7 +1,5 @@
 <?php 
 
-include '/errorCheck.php';
-
 include '../head.php';
 
 echo " <body>";

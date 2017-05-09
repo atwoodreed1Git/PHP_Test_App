@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-include "/errorCheck.php";
-
 $shoppingCart = array(array(item_id => 0,
 									item_size => "Extra Small",
 									item_price => 5,
@@ -111,9 +109,10 @@ echo "			<div class=\"col s1\">
 	<script type="text/javascript">
 		function addToCart0() {
 			
-		var pid = $('#productID0').val();
+			var pid = $('#productID0').val();
+			
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			$.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result0').html(data);
 			 	});
@@ -124,7 +123,7 @@ echo "			<div class=\"col s1\">
 			
 		var pid = $('#productID1').val();
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			 $.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result1').html(data);
 			 	});
@@ -135,7 +134,7 @@ echo "			<div class=\"col s1\">
 			
 		var pid = $('#productID2').val();
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			 $.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result2').html(data);
 			 	});
@@ -146,7 +145,7 @@ echo "			<div class=\"col s1\">
 			
 		var pid = $('#productID3').val();
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			 $.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result3').html(data);
 			 	});
@@ -157,7 +156,7 @@ echo "			<div class=\"col s1\">
 			
 		var pid = $('#productID4').val();
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			 $.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result4').html(data);
 			 	});
@@ -168,7 +167,7 @@ echo "			<div class=\"col s1\">
 			
 		var pid = $('#productID5').val();
 
-			 $.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {postid:pid}, 
+			 $.post('/myWeb/pages/shopping/cart.php', {postid:pid}, 
 			 	function(data) {
 			 		$('#result5').html(data);
 			 	});

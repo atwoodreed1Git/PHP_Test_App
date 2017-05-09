@@ -1,5 +1,5 @@
 <?php
-$baseDir = "/cs313-php/web/myWeb/";
+$baseDir = "/myWeb/";
 echo "<!DOCTYPE html>
 <html>
 <head>

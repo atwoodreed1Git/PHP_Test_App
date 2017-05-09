@@ -4,8 +4,6 @@ session_start();
 $username = htmlspecialchars($_POST['name']);
 $address = htmlspecialchars($_POST['address']);
 
-include '/errorCheck.php';
-
 include '../head.php';
 
 echo " <body class=\"black\">";

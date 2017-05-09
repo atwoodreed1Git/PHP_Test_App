@@ -1,15 +1,6 @@
 <?php 
 
-$baseDir = "";
-
-if ($_SERVER["HTTP_HOST"] == "localhost") {
-	$baseDir = "/cs313-php/web/myWeb/";
-}
-else
-{
-	$baseDir = "/myWeb/";
-}
-
+$baseDir = "/myWeb/";
 
 echo "<!DOCTYPE html>
 <html>

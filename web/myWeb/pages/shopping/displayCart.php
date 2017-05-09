@@ -1,8 +1,6 @@
 <?php 
 session_start(); 
 
-include '/errorCheck.php';
-
 include '../head.php';
 
 echo " <body class=\"black\">";
@@ -94,11 +92,11 @@ echo "			</tbody>
 			var pid = $('#productID0').val();
 			var i = r.parentNode.parentNode.rowIndex;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i+1);
 
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -107,10 +105,10 @@ echo "			</tbody>
 			var pid = $('#productID1').val();
 			var i = r.parentNode.parentNode.rowIndex + 1;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -119,10 +117,10 @@ echo "			</tbody>
 			var pid = $('#productID2').val();
 			var i = r.parentNode.parentNode.rowIndex + 1;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -131,10 +129,10 @@ echo "			</tbody>
 			var pid = $('#productID3').val();
 			var i = r.parentNode.parentNode.rowIndex + 1;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -143,10 +141,10 @@ echo "			</tbody>
 			var pid = $('#productID4').val();
 			var i = r.parentNode.parentNode.rowIndex + 1;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 	<script type="text/javascript">
@@ -155,10 +153,10 @@ echo "			</tbody>
 			var pid = $('#productID5').val();
 			var i = r.parentNode.parentNode.rowIndex + 1;
 
-			$.post('/cs313-php/web/myWeb/pages/shopping/cart.php', {rid:pid});
+			$.post('/myWeb/pages/shopping/cart.php', {rid:pid});
 
 			document.getElementById("cartTable").deleteRow(i);
-			window.location.href = "/cs313-php/web/myWeb/pages/shopping/displayCart.php";
+			window.location.href = "/myWeb/pages/shopping/displayCart.php";
 		}
 	</script>
 

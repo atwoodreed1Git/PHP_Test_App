@@ -1,10 +1,6 @@
 <?php 
 session_start();
 
-$baseDir = "/cs313-php/web/myWeb/";
-
-include "/errorCheck.php";
-
 if (isset($_POST['postid']))
 {
 	$i_idd = htmlspecialchars($_POST['postid']);
