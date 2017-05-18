@@ -4,7 +4,7 @@ include_once 'head.php';
 
 echo " <body>";
 
-include_once 'landonHeader.php';
+include_once '/headers/landonHeader.php';
 include_once 'menu.php';
 
 echo "	<main class=\"white\">

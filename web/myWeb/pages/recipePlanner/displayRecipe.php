@@ -21,7 +21,7 @@ function getTitle($curTitle)
 // {
 // 	global $db;
 
-// 	$recipeName = $db->prepare('SELECT title FROM recipe WHERE id=:id');
+// 	$ = $db->prepare('SELECT title FROM recipe WHERE id=:id');
 
 // 	$rID = $curTitle;
 // 	$recipeName->execute();
