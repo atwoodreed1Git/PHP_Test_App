@@ -1,11 +1,12 @@
 <?php 
 session_start(); 
 
-include '../head.php';
+include_once '../head.php';
 
 echo " <body class=\"black\">";
 
-include '../menu.php';
+include_once '../landonHeader.php';
+include_once '../menu.php';
 
 echo "	<main>
 		<h1 class=\"white-text center\"> Shopping Cart </h1>

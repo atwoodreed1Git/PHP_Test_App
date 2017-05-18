@@ -1,10 +1,11 @@
 <?php 
 
-include '../head.php';
+include_once '../head.php';
 
 echo " <body>";
 
-include '../menu.php';
+include_once '../landonHeader.php';
+include_once '../menu.php';
 
 echo "	<main>
 	

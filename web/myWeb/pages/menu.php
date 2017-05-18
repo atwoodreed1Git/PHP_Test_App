@@ -2,18 +2,8 @@
  
  $curPage = basename($_SERVER['PHP_SELF'],".php");
 
-echo "
-	<header>
-		<nav class=\"top-nav\">
-			<div class=\"nav-wrapper blue lighten-1\">
-		  		<div>
-		      	<a href=\"#\" class=\"brand-logo\"> Landon's Laptop Fund</a>
-		      </div>
-		   </div>
-		</nav>
-
-		<ul id=\"assigns\" class=\"side-nav fixed\">
-	";
+echo "		<ul id=\"assigns\" class=\"side-nav fixed\">
+";
 ?>
 		<li class="<?php if ($curPage == "home") echo 'active'?>">
 <?php
@@ -49,12 +39,20 @@ echo "									<a href=\"$baseDir"."pages/shopping/checkout.php\">Check Out</a>
 <?php
 echo "									<a href=\"$baseDir"."pages/shopping/conformation.php\">Conformation</a>
 								</li>
-								<li class=\"divider\"></li>
 							</ul>
 						</div>
 					</li>
+					<li class=\"divider\"></li>
 				</ul>
   			</li>
+";
+?>
+			<li class="<?php if ($curPage == "index") echo 'active'?>">
+<?php
+echo "				<a href=\"$baseDir"."pages/recipePlanner/index.php\">Recipe Planner</a>
+			</li>
+			<li class=\"divider\"></li>
+
 		</ul>
 	</header>
 ";

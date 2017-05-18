@@ -39,7 +39,8 @@ include_once '../head.php';
 
 echo "<body class=\"black\">";
 
-include '../menu.php';
+include_once '../landonHeader.php';
+include_once '../menu.php';
 
 echo "	<main class=\"container\">
 		<h1 class=\"white-text\">Donation Amounts</h1>
