@@ -43,7 +43,7 @@ CREATE TABLE recipe_ingredient
 	id SERIAL PRIMARY KEY,
 	ingredient_id INT NOT NULL REFERENCES ingredient(id),
 	recipe_id INT NOT NULL REFERENCES recipe(id),
-	quantity_needed NUMERIC(10,3) NOT NULL DEFAULT 0
+	quantity_needed VARCHAR(6) NOT NULL DEFAULT 0
 );
 
 \d recipe_ingredient
@@ -108,21 +108,24 @@ UPDATE pantry SET quantity = 100 WHERE ingredient_id = 7;
 
 SELECT * FROM pantry;
 
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('1', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('2', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('3', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('4', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('5', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('6', '1');
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id) VALUES ('7', '1');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('1', '1', '1', '1');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('2', '2', '1', '1');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('3', '3', '1', '1');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('4', '4', '1', '5');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('5', '5', '1', '3');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('6', '6', '1', '1/4');
+INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('7', '7', '1', '1/8');
 
 UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 1;
 UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 2;
 UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 3;
 UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
 UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
-UPDATE recipe_ingredient SET quantity_needed = 0.25 WHERE ingredient_id = 6;
-UPDATE recipe_ingredient SET quantity_needed = 0.125 WHERE ingredient_id = 7;
+INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
+UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
+
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '1', '1/4');
+
 
 SELECT * FROM recipe_ingredient;
 
@@ -131,3 +134,8 @@ SELECT * FROM ingredient;
 SELECT * FROM pantry;
 SELECT * FROM recipe_ingredient;
 SELECT * FROM recipe;
+
+ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
+ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
+
+TRUNCATE TABLE recipe_ingredient;

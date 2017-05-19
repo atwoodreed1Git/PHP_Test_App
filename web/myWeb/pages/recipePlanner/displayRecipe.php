@@ -2,14 +2,14 @@
 
 include_once 'x.php';
 
-function getTitle($curTitle)
+function getTitle($recipeID)
 {
 	global $db;
 
 	$recipeName = $db->prepare('SELECT title, instruction FROM recipe WHERE id=:id');
 	$recipeName->bindParam(':id', $rID);
 
-	$rID = $curTitle;
+	$rID = $recipeID;
 	$recipeName->execute();
 
 	//var_dump($recipeName->fetch());
@@ -17,34 +17,35 @@ function getTitle($curTitle)
 }
 	
 
-// function getIngredients($curIngredient)
-// {
-// 	global $db;
+function getIngredients($curID)
+{
+	global $db;
 
-// 	$ = $db->prepare('SELECT title FROM recipe WHERE id=:id');
+	$rID = $curID;
 
-// 	$rID = $curTitle;
-// 	$recipeName->execute();
+	$curRecipe = $db->prepare('SELECT quantity_needed, lable, name FROM measurment as m, recipe_ingredient AS ri, recipe AS r, ingredient AS i WHERE m.id = i.measurment_id and r.id = :id and ri.id = i.id;');
 
-// 	//var_dump($recipeName->fetch());
-// 	return $recipeName->fetchColumn();
-// }
+	$curRecipe->bindParam(':id', $rID);
+	
+	$curRecipe->execute();
 
-$recipeArray = getTitle(1);
+	//var_dump($recipeName->fetch());
+	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
+}
 
+$recipeInfo = getTitle(1);
+$recipeIngredints = getIngredients(1);
 
-echo "<h3>". $recipeArray['title'] ."</h3>";
+echo "		<h3>". $recipeInfo['title'] ."</h3>
+";
 
+foreach ($recipeIngredints as $row) {
 
-echo "<p style=\"white-space: pre-wrap;\">". $recipeArray['instruction'] ."</p>";
+	echo $row['quantity_needed'] . " " . $row['lable'] . " " . $row['name'] . "
+			<br>
+";
+}
 
-// foreach ($db->query('SELECT * FROM ingredient') as $row) 
-// {
-//    echo "	<div>
-// 			<h3>. "$row[''] .  ".$row['chapter'].":".$row['verse']."</span>
-// 			 - \"" . $row['content'].".\"
-// 		</div>
-// ";
-// } 
+echo "		<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] ."</p>";
 
 ?>
