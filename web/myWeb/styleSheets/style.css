@@ -7,6 +7,19 @@ header, main, footer, head {
 		padding-left: 0;
    }
 }
+.container {
+   margin: 0 auto;
+   max-width: 1280px;
+   width: 90%;
+}
+@media only screen and (min-width: 601px)
+  .container {
+    width: 85%;
+}
+@media only screen and (min-width: 993px)
+  .container {
+    width: 70%;
+}
 
 #sad_pic {
    width: 180px; 
@@ -43,7 +56,7 @@ header, main, footer, head {
    text-align: left;
    width: 800px;
    height: 800px;
-   padding: 5px;
+   padding: 20px;
    background-color: white;
    border: 1px solid blue;
    margin: auto;

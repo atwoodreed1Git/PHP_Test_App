@@ -7,7 +7,8 @@ echo "<body>";
 include_once '../headers/RecipePlannerHeader.php';
 include_once '../menu.php';
 
-echo "	<main class=\"white\">
+echo "	<main class=\"light-blue lighten-5\">
+			<br>
 ";
 
 include_once 'displayRecipe.php';

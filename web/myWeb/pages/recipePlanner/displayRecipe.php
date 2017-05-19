@@ -12,10 +12,8 @@ function getTitle($recipeID)
 	$rID = $recipeID;
 	$recipeName->execute();
 
-	//var_dump($recipeName->fetch());
 	return $recipeName->fetch();
 }
-	
 
 function getIngredients($curID)
 {
@@ -29,14 +27,14 @@ function getIngredients($curID)
 	
 	$curRecipe->execute();
 
-	//var_dump($recipeName->fetch());
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
 $recipeInfo = getTitle(1);
 $recipeIngredints = getIngredients(1);
 
-echo "		<h3>". $recipeInfo['title'] ."</h3>
+echo "		<div class=\"center border\">
+		<h3>". $recipeInfo['title'] ."</h3>
 ";
 
 foreach ($recipeIngredints as $row) {
@@ -46,6 +44,9 @@ foreach ($recipeIngredints as $row) {
 ";
 }
 
-echo "		<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] ."</p>";
+echo "		<h5> Instruction </h5>
+			<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] ."</p>
+		</div>
+";
 
 ?>
