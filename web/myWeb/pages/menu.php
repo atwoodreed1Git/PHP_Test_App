@@ -7,7 +7,7 @@ echo "		<ul id=\"assigns\" class=\"side-nav fixed\">
 ?>
 		<li class="<?php if ($curPage == "home") echo 'active'?>">
 <?php
-echo "				<a href=\"$baseDir"."pages/home.php\">Home</a></li>
+echo "				<a href=\"$baseDir"."pages/home/home.php\">Home</a></li>
 			<li class=\"divider\"></li>
 			<li>
     			<ul class=\"collapsible collapsible-accordion\">
