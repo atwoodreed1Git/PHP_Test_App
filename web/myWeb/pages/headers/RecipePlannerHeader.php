@@ -26,7 +26,7 @@ echo "					<a href=\"../recipePlanner/addRecipe.php\">Add Recipe</a>
 				</li>
 ";
 ?>
-				<li class="<?php if ($curP == "Pantry") echo 'active'?>">
+				<li class="<?php if ($curP == "pantry") echo 'active'?>">
 <?php
 echo "					<a href=\"../recipePlanner/pantry.php\">Pantry</a>
 				</li>

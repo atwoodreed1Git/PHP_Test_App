@@ -24,7 +24,8 @@ CREATE TABLE recipe
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) NOT NULL UNIQUE,
 	instruction TEXT NOT NULL,
-	last_used DATE
+	last_used DATE,
+	reference VARCHAR(150)
 );
 
 \d recipe
@@ -116,13 +117,13 @@ INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VAL
 INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('6', '6', '1', '1/4');
 INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('7', '7', '1', '1/8');
 
-UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 1;
-UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 2;
-UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 3;
-UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
-UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
-INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
-UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 1;
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 2;
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 3;
+-- UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
+-- UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
+-- INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
+-- UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
 
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '1', '1/4');
 
@@ -135,7 +136,30 @@ SELECT * FROM pantry;
 SELECT * FROM recipe_ingredient;
 SELECT * FROM recipe;
 
-ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
-ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
+
+SELECT quantity, lable, name FROM measurment as m, pantry as p, ingredient AS i WHERE m.id = i.measurment_id and p.id = i.id ORDER BY name;
+
+-- ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
+-- ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
 
 TRUNCATE TABLE recipe_ingredient;
+	
+
+-- Modify recipe to have a reference
+ALTER TABLE recipe ADD COLUMN reference VARCHAR(1000);
+-- ALTER TABLE recipe_ingredient DROP COLUMN reference;
+UPDATE recipe SET reference = 'Allrecipes.com, http://allrecipes.com/recipe/20876/crustless-spinach-quiche/' WHERE id = 1;
+
+-- new recipe
+
+INSERT INTO ingredient(name, measurment_id) VALUES ('semisweet chocolate chips', '4');
+INSERT INTO ingredient(name, measurment_id) VALUES ('Rice Krispies', '4');
+INSERT INTO ingredient(name, measurment_id) VALUES ('chopped almonds', '4');
+
+INSERT INTO recipe(title, instruction, reference) VALUES ('Chocolate Krisps', '1. Arrange 24 paper candy cups on a tray.
+2. Place chocolate chips in a microwave-safe bowl; heat in the microwave until melted, about 2 minutes. Stir.
+3. Stir crispy rice cereal and almonds into melted chocolate. Drop a spoonful of chocolate mixture into each candy cup. Refrigerate until set, 1 to 2 hours.', 'Allrecipes.com, http://allrecipes.com/recipe/232712/chocolate-krisps/');
+
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('8', '2', '2');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('9', '2', '1');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('10', '2', '1/2');

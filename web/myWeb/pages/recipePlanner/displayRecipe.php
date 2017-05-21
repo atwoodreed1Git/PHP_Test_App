@@ -6,7 +6,7 @@ function getTitle($recipeID)
 {
 	global $db;
 
-	$recipeName = $db->prepare('SELECT title, instruction FROM recipe WHERE id=:id');
+	$recipeName = $db->prepare('SELECT title, instruction, reference FROM recipe WHERE id=:id');
 	$recipeName->bindParam(':id', $rID);
 
 	$rID = $recipeID;
@@ -30,23 +30,24 @@ function getIngredients($curID)
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-$recipeInfo = getTitle(1);
-$recipeIngredints = getIngredients(1);
+$recipeInfo = getTitle($randRecipe);
+$recipeIngredints = getIngredients($randRecipe);
 
-echo "		<div class=\"center border\">
-		<h3>". $recipeInfo['title'] ."</h3>
+echo "		<div class=\"container\">
+					<h3>". $recipeInfo['title'] ."</h3>
 ";
 
 foreach ($recipeIngredints as $row) {
 
 	echo $row['quantity_needed'] . " " . $row['lable'] . " " . $row['name'] . "
-			<br>
+					<br>
 ";
 }
 
-echo "		<h5> Instruction </h5>
-			<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] ."</p>
-		</div>
+echo "				<h5> Instruction </h5>
+						<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] . "</p>
+						<p>From: " . $recipeInfo['reference'] . "</p> 
+			</div>
 ";
 
 ?>

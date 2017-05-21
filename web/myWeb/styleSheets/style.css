@@ -44,7 +44,8 @@ header, main, footer, head {
    padding: 10px;
 }
 .bl-border {
-   border: 15px solid black;
+   border: 5px solid black;
+   width: 800px;
    margin-top: 5px;
 }
 .fontVerdana {
