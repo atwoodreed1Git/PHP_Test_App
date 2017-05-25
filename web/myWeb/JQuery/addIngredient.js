@@ -1,5 +1,6 @@
 $(document).ready(function(e) {
 
+alert("i am here");
 	// add row of ingredient
 	$("#ingredientRow1").on('click', '#addI', function(e) {
 
@@ -15,27 +16,24 @@ $(document).ready(function(e) {
 		// increment the button number
 		$newRow.find("#btn" + (num - 1)).attr("id", "btn" +num);
 		$newRow.find("input[type=text], textarea").val("");
-		
-		// add new row
-      $div.after($newRow);
 
-      // add remove button
+		// add new row
+		$div.after($newRow);
+
+		// add remove button
 		var $removeText = '<a href=\"#\" id=\"removeI' + num + '\" class=\"btn-floating btn-large waves-effect waves-light red right\" ';
 		$removeText += 'onclick=\"removeIngredient(this.id);\"><i class=\"large material-icons\">delete</i></a>';
 
 		// change the add button to a remove button
 		$("#btn"+num).html($removeText);
 
-		//$(this).closest('form')
-
 	});
-
-	// remove row of ingredient
 	
 });
 
 function removeIngredient(clicked_id) { 
 
-		var currentNum = '#ingredientRow' + parseInt( clicked_id.match(/\d+/g), 10 );
-		$(currentNum).remove();
+	// remove row of ingredient
+	var currentNum = '#ingredientRow' + parseInt( clicked_id.match(/\d+/g), 10 );
+	$(currentNum).remove();
 };
