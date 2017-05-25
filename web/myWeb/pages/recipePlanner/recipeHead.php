@@ -9,7 +9,7 @@ echo "<!DOCTYPE html>
 	<script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js\"></script>
 	
 	<script src=\"$baseDir"."JQuery/ready.js\"></script>
-	<script src=\"$baseDir"."JQuery/addingredient.js\"></script>
+	<script src=\"$baseDir"."JQuery/add_ingredient.js\"></script>
 	
 	<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css\">
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"$baseDir"."styleSheets/style.css\">
