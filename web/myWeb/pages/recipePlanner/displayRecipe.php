@@ -5,11 +5,12 @@ include_once 'x.php';
 function getTitle($recipeID)
 {
 	global $db;
+	
+	$rID = $recipeID;
 
 	$recipeName = $db->prepare('SELECT title, instruction, reference FROM recipe WHERE id=:id');
 	$recipeName->bindParam(':id', $rID);
 
-	$rID = $recipeID;
 	$recipeName->execute();
 
 	return $recipeName->fetch();

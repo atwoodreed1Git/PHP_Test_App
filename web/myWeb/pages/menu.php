@@ -12,7 +12,7 @@ echo "				<a href=\"$baseDir"."pages/home/home.php\">Home</a></li>
 			<li>
     			<ul class=\"collapsible collapsible-accordion\">
     				<li>
-    					<a class=\"collapsible-header\">Donations<i class=\"material-icons right\"></i></a>
+    					<a class=\"collapsible-header\">Donations<i class=\"material-icons right\">arrow_drop_down</i></a>
     					<div class=\"collapsible-body\">
     						<ul>
 ";

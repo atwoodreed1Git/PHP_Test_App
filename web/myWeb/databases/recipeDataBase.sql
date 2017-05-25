@@ -25,7 +25,7 @@ CREATE TABLE recipe
 	title VARCHAR(100) NOT NULL UNIQUE,
 	instruction TEXT NOT NULL,
 	last_used DATE,
-	reference VARCHAR(150)
+	reference VARCHAR(100)
 );
 
 \d recipe
@@ -44,11 +44,12 @@ CREATE TABLE recipe_ingredient
 	id SERIAL PRIMARY KEY,
 	ingredient_id INT NOT NULL REFERENCES ingredient(id),
 	recipe_id INT NOT NULL REFERENCES recipe(id),
-	quantity_needed VARCHAR(6) NOT NULL DEFAULT 0
+	quantity_needed VARCHAR(10) NOT NULL DEFAULT 0
 );
 
 \d recipe_ingredient
 
+--  ADD MEASUREMENTS
 INSERT INTO measurment(lable) VALUES ('teaspoon (tsp)');
 INSERT INTO measurment(lable) VALUES ('tablespoon (tbsp, T or tbs)');
 INSERT INTO measurment(lable) VALUES ('fluid ounce (fl oz)');
@@ -74,6 +75,7 @@ INSERT INTO measurment(lable) VALUES ('small');
 
 SELECT * FROM measurment;
 
+-- ADD INGREDIENTS
 INSERT INTO ingredient(name, measurment_id) VALUES ('vegetable oil','2');
 INSERT INTO ingredient(name, measurment_id) VALUES ('onion, chopped', '19');
 INSERT INTO ingredient(name, measurment_id) VALUES ('frozen chopped spinach', '11');
@@ -84,13 +86,15 @@ INSERT INTO ingredient(name, measurment_id) VALUES ('ground black pepper', '1');
 
 SELECT * FROM ingredient;
 
-INSERT INTO recipe(title, instruction) VALUES ('Crustless Spinach Quiche', '1. Preheat oven to 350 degrees F (175 degrees C). Lightly grease a 9 inch pie pan.
+--  ADD A RECIPE
+INSERT INTO recipe(title, instruction, reference) VALUES ('Crustless Spinach Quiche', '1. Preheat oven to 350 degrees F (175 degrees C). Lightly grease a 9 inch pie pan.
 2. Heat oil in a large skillet over medium-high heat. Add onions and cook, stirring occasionally, until onions are soft. Stir in spinach and continue cooking until excess moisture has evaporated.
 3. In a large bowl, combine eggs, cheese, salt and pepper. Add spinach mixture and stir to blend. Scoop into prepared pie pan.
-4. Bake in preheated oven until eggs have set, about 30 minutes. Let cool for 10 minutes before serving.');
+4. Bake in preheated oven until eggs have set, about 30 minutes. Let cool for 10 minutes before serving.', 'Allrecipes.com, http://allrecipes.com/recipe/20876/crustless-spinach-quiche/');
 
 SELECT * FROM recipe;
 
+--  ADD PANTRY
 INSERT INTO pantry(ingredient_id) VALUES ('1');
 INSERT INTO pantry(ingredient_id) VALUES ('2');
 INSERT INTO pantry(ingredient_id) VALUES ('3');
@@ -109,48 +113,31 @@ UPDATE pantry SET quantity = 100 WHERE ingredient_id = 7;
 
 SELECT * FROM pantry;
 
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('1', '1', '1', '1');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('2', '2', '1', '1');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('3', '3', '1', '1');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('4', '4', '1', '5');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('5', '5', '1', '3');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('6', '6', '1', '1/4');
-INSERT INTO recipe_ingredient(id, ingredient_id, recipe_id, quantity_needed) VALUES ('7', '7', '1', '1/8');
-
--- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 1;
--- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 2;
--- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 3;
--- UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
--- UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
--- INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
--- UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
+--  ADD THE QUANTITY TO THE INGREDIENTS
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('1', '1', '1');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('2', '1', '1');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('3', '1', '1');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('4', '1', '5');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('5', '1', '3');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '1', '1/4');
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('7', '1', '1/8');
 
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '1', '1/4');
 
 
 SELECT * FROM recipe_ingredient;
 
+--  SHOW ALL INFROMATION IN THE TABLE
 SELECT * FROM measurment;
 SELECT * FROM ingredient;
-SELECT * FROM pantry;
 SELECT * FROM recipe_ingredient;
 SELECT * FROM recipe;
+SELECT * FROM pantry;
 
+-- GET THE INGREEDENTS FOR A RECIPE
+SELECT quantity, lable, name FROM measurment AS m, pantry AS p, ingredient AS i WHERE m.id = i.measurment_id and p.id = i.id ORDER BY name;
 
-SELECT quantity, lable, name FROM measurment as m, pantry as p, ingredient AS i WHERE m.id = i.measurment_id and p.id = i.id ORDER BY name;
-
--- ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
--- ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
-
-TRUNCATE TABLE recipe_ingredient;
-	
-
--- Modify recipe to have a reference
-ALTER TABLE recipe ADD COLUMN reference VARCHAR(1000);
--- ALTER TABLE recipe_ingredient DROP COLUMN reference;
-UPDATE recipe SET reference = 'Allrecipes.com, http://allrecipes.com/recipe/20876/crustless-spinach-quiche/' WHERE id = 1;
-
--- new recipe
+--	**************************************   new recipe  ********************************************  --
 
 INSERT INTO ingredient(name, measurment_id) VALUES ('semisweet chocolate chips', '4');
 INSERT INTO ingredient(name, measurment_id) VALUES ('Rice Krispies', '4');
@@ -163,3 +150,35 @@ INSERT INTO recipe(title, instruction, reference) VALUES ('Chocolate Krisps', '1
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('8', '2', '2');
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('9', '2', '1');
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('10', '2', '1/2');
+
+-- *****************************************           Get the next value in the recipe.  *******************************************--
+SELECT nextval('recipe_id_seq');
+
+
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '3', '1/4');
+
+
+
+
+
+
+-- ***************************************     FIXES TO THE DATABASE   ****************************************************** --
+
+-- ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
+-- ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
+
+--- TRUNCATE TABLE recipe_ingredient;
+
+----------------------------------------------- Modify recipe to have a reference -------------------------------------------------
+-- ALTER TABLE recipe ADD COLUMN reference VARCHAR(1000);
+
+-------------------------------------------------------- UPDATE information in database -------------------------------------------
+-- UPDATE recipe SET reference = 'Allrecipes.com, http://allrecipes.com/recipe/20876/crustless-spinach-quiche/' WHERE id = 1;
+
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 1;
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 2;
+-- UPDATE recipe_ingredient SET quantity_needed = 1 WHERE ingredient_id = 3;
+-- UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
+-- UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
+-- INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
+-- UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
