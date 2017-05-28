@@ -204,6 +204,10 @@ if (isset($_GET['submit']))
 	}
 }
 
+
+header("Location: addRecipe.php");
+exit;
+
 echo $message;
 echo "	</body>
 </html>
