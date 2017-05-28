@@ -1,6 +1,5 @@
 $(document).ready(function(e) {
 
-alert("i am here");
 	// add row of ingredient
 	$("#ingredientRow1").on('click', '#addI', function(e) {
 
@@ -36,4 +35,8 @@ function removeIngredient(clicked_id) {
 	// remove row of ingredient
 	var currentNum = '#ingredientRow' + parseInt( clicked_id.match(/\d+/g), 10 );
 	$(currentNum).remove();
+};
+
+function clearRecipe() {
+	document.getElementById("addRecipeID").reset();
 };

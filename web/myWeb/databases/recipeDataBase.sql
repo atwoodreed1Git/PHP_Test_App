@@ -55,8 +55,8 @@ INSERT INTO measurment(lable) VALUES ('tablespoon (tbsp, T or tbs)');
 INSERT INTO measurment(lable) VALUES ('fluid ounce (fl oz)');
 INSERT INTO measurment(lable) VALUES ('cup (c)');
 INSERT INTO measurment(lable) VALUES ('pint (pt or p)');
-INSERT INTO measurment(lable) VALUES ('quart (q or qt');
-INSERT INTO measurment(lable) VALUES ('gallon (g or gal');
+INSERT INTO measurment(lable) VALUES ('quart (q or qt)');
+INSERT INTO measurment(lable) VALUES ('gallon (g or gal)');
 INSERT INTO measurment(lable) VALUES ('millilitter (ml)');
 INSERT INTO measurment(lable) VALUES ('liter (l)');
 INSERT INTO measurment(lable) VALUES ('pound (lb)');
@@ -153,14 +153,19 @@ INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES 
 
 -- *****************************************           Get the next value in the recipe.  *******************************************--
 SELECT nextval('recipe_id_seq');
+SELECT currval('ingredient_id_seq');
 
+INSERT INTO ingredient(name, measurment_id) VALUES ('peanut butter', '4');
+SELECT id FROM ingredient WHERE name='peanut butter';
 
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '3', '1/4');
+SELECT max(id) FROM ingredient;
 
 
+SELECT name FROM ingredient WHERE measurment_id=2 and name='salt';
 
-
-
+SELECT id FROM recipe WHERE title=:rT;
+SELECT name FROM ingredient WHERE measurment_id=:mID and name=:rname
 
 -- ***************************************     FIXES TO THE DATABASE   ****************************************************** --
 
@@ -181,4 +186,11 @@ INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES 
 -- UPDATE recipe_ingredient SET quantity_needed = 5 WHERE ingredient_id = 4;
 -- UPDATE recipe_ingredient SET quantity_needed = 3 WHERE ingredient_id = 5;
 -- INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
--- UPDATE recipe_ingredient SET quantity_needed = "1/8" WHERE ingredient_id = 7;
+-- UPDATE recipe_ingredient SET quantity_needed = '1/8' WHERE ingredient_id = 7;
+
+-- DELETE
+-- SELECT FROM recipe WHERE id=172;
+
+INSERT INTO ingredient(name, measurment_id) VALUES ('white sugar', 4);
+
+INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES (1, 1, '1/5');

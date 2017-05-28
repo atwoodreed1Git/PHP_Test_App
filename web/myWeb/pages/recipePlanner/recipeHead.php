@@ -15,7 +15,7 @@ echo "<!DOCTYPE html>
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"$baseDir"."styleSheets/style.css\">
 	<link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
 
-	<title>Landon's Laptop Fund</title>
+	<title>Recipe Planner</title>
 </head>
 ";
  ?>

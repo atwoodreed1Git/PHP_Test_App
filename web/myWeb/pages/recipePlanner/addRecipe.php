@@ -2,15 +2,6 @@
 
 include_once 'x.php';
 
-function getNewRecipeID()
-{
-	global $db;
-
-	$newID = $db->prepare("SELECT nextval('recipe_id_seq');");
-	$newID->execute();
-	return $newID->fetch();
-}
-
 function getMeasurments()
 {
 	global $db;
@@ -22,7 +13,6 @@ function getMeasurments()
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-$newRecipeID = getNewRecipeID();
 $measurmentList = getMeasurments();
 
 include_once 'recipeHead.php';
@@ -37,7 +27,7 @@ echo "		<main class=\"light-blue lighten-5\">
 ";
 
 echo " 			<div class=\"container border\">
-				<form action=\"\">
+				<form id=\"addRecipeID\" action=\"$baseDir" . "pages/recipePlanner/insertRecipe.php\" method=\"get\">
 				 	<h4>Recipe Title</h4>
 				 	<input type=\"text\" name=\"newTitle\" id=\"newTitle\" >
 					
@@ -79,8 +69,16 @@ echo "									</select>
 					</div>
 
 					<h4>Recipe Reference</h4>
-				 	<input type=\"text\" name=\"newReference\" id=\"newReference\" >
-					
+				 	<input type=\"text\" name=\"newReference\" id=\"newReference\"></input>
+					<div class=\"row\">
+				 		<div class=\"col s6\">
+							<input type=\"submit\" name=\"submit\" value=\"Add Recipe\"></input>
+						</div>
+
+						<div class=\"col s6\">
+							<input type=\"button\" onclick=\"clearRecipe();\" value=\"Reset\"></input>
+						</div>
+					</div>
 			 	</form>
 			</div>
 		</main>
