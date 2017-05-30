@@ -17,6 +17,7 @@ CREATE TABLE ingredient
 	UNIQUE(name, measurment_id)
 );
 
+UPDATE recipe SET last_used=CURRENT_DATE WHERE id=1;
 \d ingredient
 
 CREATE TABLE recipe
@@ -24,7 +25,7 @@ CREATE TABLE recipe
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(100) NOT NULL UNIQUE,
 	instruction TEXT NOT NULL,
-	last_used DATE,
+	last_used DATE NOT NULL DEFAULT CURRENT_DATE,
 	reference VARCHAR(100)
 );
 
@@ -44,7 +45,8 @@ CREATE TABLE recipe_ingredient
 	id SERIAL PRIMARY KEY,
 	ingredient_id INT NOT NULL REFERENCES ingredient(id),
 	recipe_id INT NOT NULL REFERENCES recipe(id),
-	quantity_needed VARCHAR(10) NOT NULL DEFAULT 0
+	quantity_needed VARCHAR(10) NOT NULL DEFAULT 0,
+	UNIQUE(ingredient_id, recipe_id)
 );
 
 \d recipe_ingredient
@@ -103,6 +105,8 @@ INSERT INTO pantry(ingredient_id) VALUES ('5');
 INSERT INTO pantry(ingredient_id) VALUES ('6');
 INSERT INTO pantry(ingredient_id) VALUES ('7');
 
+INSERT INTO pantry(ingredient_id, quantity) VALUES (8, 20);
+
 UPDATE pantry SET quantity = 100 WHERE ingredient_id = 1;
 UPDATE pantry SET quantity = 2 WHERE ingredient_id = 2;
 UPDATE pantry SET quantity = 2 WHERE ingredient_id = 3;
@@ -136,6 +140,7 @@ SELECT * FROM pantry;
 
 -- GET THE INGREEDENTS FOR A RECIPE
 SELECT quantity, lable, name FROM measurment AS m, pantry AS p, ingredient AS i WHERE m.id = i.measurment_id and p.id = i.id ORDER BY name;
+SELECT title FROM recipe ORDER BY last_used;
 
 --	**************************************   new recipe  ********************************************  --
 
@@ -152,27 +157,29 @@ INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES 
 INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('10', '2', '1/2');
 
 -- *****************************************           Get the next value in the recipe.  *******************************************--
-SELECT nextval('recipe_id_seq');
-SELECT currval('ingredient_id_seq');
+-- SELECT nextval('recipe_id_seq');
+-- SELECT currval('ingredient_id_seq');
 
-INSERT INTO ingredient(name, measurment_id) VALUES ('peanut butter', '4');
-SELECT id FROM ingredient WHERE name='peanut butter';
+-- INSERT INTO ingredient(name, measurment_id) VALUES ('peanut butter', '4');
+-- SELECT id FROM ingredient WHERE name='peanut butter';
 
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '3', '1/4');
-SELECT max(id) FROM ingredient;
+-- INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES ('6', '3', '1/4');
+-- SELECT max(id) FROM ingredient;
 
 
-SELECT name FROM ingredient WHERE measurment_id=2 and name='salt';
+-- SELECT name FROM ingredient WHERE measurment_id=2 and name='salt';
 
-SELECT id FROM recipe WHERE title=:rT;
-SELECT name FROM ingredient WHERE measurment_id=:mID and name=:rname
+-- SELECT id FROM recipe WHERE title=:rT;
+-- SELECT name FROM ingredient WHERE measurment_id=:mID and name=:rname
 
 -- ***************************************     FIXES TO THE DATABASE   ****************************************************** --
 
 -- ALTER TABLE recipe_ingredient DROP COLUMN quantity_needed;
--- ALTER TABLE recipe_ingredient ADD COLUMN quantity_needed VARCHAR(6) NOT NULL DEFAULT 0;
+-- ALTER TABLE recipe ALTER COLUMN last_used SET DEFAULT CURRENT_DATE;
 
---- TRUNCATE TABLE recipe_ingredient;
+-- ALTER TABLE recipe_ingredient ADD CONSTRAINT UNIQUE(ingredient_id, recipe_id);
+
+--- TRUNCATE TABLE recipe_ingredient;	
 
 ----------------------------------------------- Modify recipe to have a reference -------------------------------------------------
 -- ALTER TABLE recipe ADD COLUMN reference VARCHAR(1000);
@@ -188,9 +195,24 @@ SELECT name FROM ingredient WHERE measurment_id=:mID and name=:rname
 -- INSERT INTO recipe_ingredient(quantity_needed) VALUES ('1/4') WHERE ingredient_id = 6;
 -- UPDATE recipe_ingredient SET quantity_needed = '1/8' WHERE ingredient_id = 7;
 
--- DELETE
--- SELECT FROM recipe WHERE id=172;
+-- DELETE FROM pantry WHERE id=8;
 
-INSERT INTO ingredient(name, measurment_id) VALUES ('white sugar', 4);
+--INSERT INTO ingredient(name, measurment_id) VALUES ('white sugar', 4);
 
-INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES (1, 1, '1/5');
+--INSERT INTO recipe_ingredient(ingredient_id, recipe_id, quantity_needed) VALUES (1, 1, '1/5');
+
+SELECT id FROM recipe ORDER BY last_used DESC LIMIT 0, 3;
+
+
+SELECT quantity_needed, lable, name FROM measurment as m, recipe_ingredient AS ri, recipe AS r, ingredient AS i WHERE m.id = i.measurment_id and r.id = 1 and ri.id = i.id;
+
+SELECT quantity_needed, lable, name FROM ingredient i JOIN recipe_ingredient ri ON i.id=ri.ingredient_id JOIN recipe r ON ri.recipe_id=r.id JOIN measurment m ON i.measurment_id=m.id WHERE r.id = 1;
+
+
+SELECT quantity, lable, name FROM measurment m JOIN ingredient i ON m.id = i.measurment_id JOIN pantry p ON p.ingredient_id = i.id ORDER BY name;
+
+UPDATE recipe SET last_used='2011-01-01' WHERE id=1;
+UPDATE recipe SET last_used='2012-04-10' WHERE id=2;
+UPDATE recipe SET last_used='2015-06-15' WHERE id=203;
+UPDATE recipe SET last_used='2016-06-20' WHERE id=205;
+UPDATE recipe SET last_used='2000-10-30' WHERE id=206;

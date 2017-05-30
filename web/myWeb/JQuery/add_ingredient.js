@@ -33,7 +33,7 @@ $(document).ready(function(e) {
 function removeIngredient(clicked_id) { 
 
 	// remove row of ingredient
-	var currentNum = '#ingredientRow' + parseInt( clicked_id.match(/\d+/g), 10 );
+	var currentNum = '#ingredientRow' + parseInt(clicked_id.match(/\d+/g), 10 );
 	$(currentNum).remove();
 };
 

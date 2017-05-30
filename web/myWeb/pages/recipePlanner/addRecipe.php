@@ -27,7 +27,7 @@ echo "		<main class=\"light-blue lighten-5\">
 ";
 
 echo " 			<div class=\"container border\">
-				<form id=\"addRecipeID\" action=\"$baseDir" . "pages/recipePlanner/insertRecipe.php\" method=\"get\">
+				<form id=\"addRecipeID\" action=\"$baseDir" . "pages/recipePlanner/insertRecipe.php\" method=\"post\">
 				 	<h4>Recipe Title</h4>
 				 	<input type=\"text\" name=\"newTitle\" id=\"newTitle\" >
 					

@@ -146,22 +146,24 @@ include_once 'recipeHead.php';
 
 echo "<body>";
 
-if (isset($_GET['submit']))
+if (isset($_POST['submit']))
 {
 	global $db;
-	$recipeTitle = $_GET['newTitle'];
-	$quant = $_GET['quantity'];
-	$measure = $_GET['measurment'];
-	$ingredientsName = $_GET['ingreName'];
-	$instruct = $_GET['newInstruction'];
-	$reference = $_GET['newReference'];
+	$recipeTitle = $_POST['newTitle'];
+	$quant = $_POST['quantity'];
+	$measure = $_POST['measurment'];
+	$ingredientsName = $_POST['ingreName'];
+	$instruct = $_POST['newInstruction'];
+	$reference = $_POST['newReference'];
 
 	$isRecipeFound = getRecipeID($recipeTitle);
 
 	if ($isRecipeFound)
 	{
 		$message .= "We already have a recipe with that name. Please rename and try again\n";
-		//exit;
+		header("Location: addRecipe.php");
+		die();
+		exit;
 	}
 	else {
 		// we have a new recipe so lets add it; add title, instructions and reference
@@ -177,8 +179,10 @@ if (isset($_GET['submit']))
 		if (!$measureID)
 		{
 			$message .= "ID not found";
+			header("Location: addRecipe.php");
+			die();
 			exit;
-		}	
+		}
 
 		$ingredientName = getRecipeName($measureID[0], $i_name);
 
@@ -204,8 +208,8 @@ if (isset($_GET['submit']))
 	}
 }
 
-
 header("Location: addRecipe.php");
+die();
 exit;
 
 echo $message;
