@@ -1,16 +1,7 @@
 <?php 
+session_start();
 
 include_once 'x.php';
-
-function getListRecipesID() {
-	global $db;
-
-	$listRecipes = $db->prepare('SELECT id FROM recipe ORDER BY last_used DESC LIMIT 5;');
-
-	$listRecipes->execute();
-
-	return $listRecipes->fetchall(PDO::FETCH_ASSOC);
-}
 
 function getTitle($recipeID)
 {
@@ -41,20 +32,20 @@ function getIngredients($curID)
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-$listIDs = getListRecipesID();
-
 $idList = array();
+echo "<div class=\"center\">";
 
 foreach ($listIDs as $i => $value) {
 	$idList[] = $value['id'];
 }
 
 $curRecipeID = $idList[$randRecipe];
+echo "</div>";
 
 $recipeInfo = getTitle($curRecipeID);
 $recipeIngredints = getIngredients($curRecipeID);
 
-echo "		<div class=\"container\">
+echo "		<div>
 					<h3>". $recipeInfo['title'] ."</h3>
 ";
 
@@ -67,6 +58,7 @@ foreach ($recipeIngredints as $row) {
 
 echo "				<h5> Instruction </h5>
 						<p style=\"white-space: pre-wrap;\">". $recipeInfo['instruction'] . "</p>
+						<br>
 						<p>From: " . $recipeInfo['reference'] . "</p> 
 			</div>
 ";

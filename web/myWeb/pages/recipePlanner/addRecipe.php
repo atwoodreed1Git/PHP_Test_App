@@ -17,22 +17,22 @@ $measurmentList = getMeasurments();
 
 include_once 'recipeHead.php';
 
-echo "<body>";
+echo "<body class=\"light-blue lighten-5\">";
 
 include_once '../headers/RecipePlannerHeader.php';
 include_once '../menu.php';
 
-echo "		<main class=\"light-blue lighten-5\">
-			<br>
-";
+echo "	<main>
+		<br>
+		<div class=\"container card\">
+			<form id=\"addRecipeID\" action=\"$baseDir" . "pages/recipePlanner/insertRecipe.php\" method=\"post\">
+				<div class=\"card-content\">
 
-echo " 			<div class=\"container border\">
-				<form id=\"addRecipeID\" action=\"$baseDir" . "pages/recipePlanner/insertRecipe.php\" method=\"post\">
 				 	<h4>Recipe Title</h4>
 				 	<input type=\"text\" name=\"newTitle\" id=\"newTitle\" >
 					
 					<h4>Ingredient</h4>
-					 <div class=\"row\">
+					<div class=\"row\">
 						<div id=\"ingredientRow1\">
 					 		<div class=\"col s3\">
 							 	<label for=\"quantity\">Quantity</label>
@@ -45,11 +45,11 @@ echo " 			<div class=\"container border\">
  ";
 
  foreach ($measurmentList as $item) {
- 	echo "							<option value=\"". $item['lable'] ."\">" . $item['lable'] . "</option>
+ 	echo "									<option value=\"". $item['lable'] ."\">" . $item['lable'] . "</option>
  ";
  }
 
-echo "									</select>
+echo "								</select>
 							</div>
 
 							<div class=\"col s4\">
@@ -63,13 +63,20 @@ echo "									</select>
 
 						</div>
 					</div>
+
 					<div>
 					 	<h4>Instructions</h4>
 					 	<textarea name=\"newInstruction\" class=\"materialize-textarea\" id=\"newInstruction\"></textarea>
 					</div>
+					
+					<div>
+						<h4>Recipe Reference</h4>
+					 	<input type=\"text\" name=\"newReference\" id=\"newReference\"></input>
+				 	</div>
 
-					<h4>Recipe Reference</h4>
-				 	<input type=\"text\" name=\"newReference\" id=\"newReference\"></input>
+				</div>
+				
+				<div class=\"card-action center\">
 					<div class=\"row\">
 				 		<div class=\"col s6\">
 							<input type=\"submit\" name=\"submit\" value=\"Add Recipe\"></input>
@@ -79,10 +86,11 @@ echo "									</select>
 							<input type=\"button\" onclick=\"clearRecipe();\" value=\"Reset\"></input>
 						</div>
 					</div>
-			 	</form>
-			</div>
-		</main>
-	</body>
+				</div>
+		 	</form>
+		</div>
+	</main>
+</body>
 </html>
 ";
 

@@ -1,7 +1,23 @@
 <?php 
+session_start();
 
 include_once 'x.php';
+/***************************************************************
+* gets the id's of the oldest 5 recipes
+****************************************************************/
+function getListRecipesID() {
+	global $db;
 
+	$listRecipes = $db->prepare('SELECT id FROM recipe ORDER BY last_used DESC LIMIT 5;');
+
+	$listRecipes->execute();
+
+	return $listRecipes->fetchall(PDO::FETCH_ASSOC);
+}
+
+/***************************************************************
+* Update the date to the current date
+****************************************************************/
 function updateDate ($currentRecipeID) {
 	global $db;
 
@@ -11,9 +27,26 @@ function updateDate ($currentRecipeID) {
 	$qU->execute();
 }
 
-if (isset($_POST['makeRecipe']))
+/***************************************************************
+* keep track of the list of recipes to display
+****************************************************************/
+if (isset($_SESSION['recipeIDList']))
 {
-	// update date
+	$listIDs = $_SESSION['recipeIDList'];
+}
+else
+{
+	$IDs = getListRecipesID();
+	$_SESSION['recipeIDList'] = $IDs;
+
+}
+
+/***************************************************************
+* 
+****************************************************************/
+if (isset($_POST['makeRecipe'])) {
+	
+	// set the current index of the list of recipes 
 	if (isset($_POST['cRecipeID']))
 	{
 		$randRecipe = $_POST['cRecipeID'];
@@ -21,19 +54,14 @@ if (isset($_POST['makeRecipe']))
 
 	if (isset($_POST['cRecipeIDIndex']))
 	{
+		// update the date with the id
 		updateDate($_POST['cRecipeIDIndex']);	
 	}
 }
-else
-	{
-	if (isset($_POST['newRecipe']))
-	{
-		$randRecipe = rand(0,4);
-	}
-	else 
-	{
-		$randRecipe = rand(0,4);
-	}
+else {
+
+	// randomly choose a recipe to display
+	$randRecipe = rand(0,4);
 }
 
 include_once '../head.php';
@@ -45,23 +73,29 @@ include_once '../menu.php';
 
 echo "	<main>
 			<br>
+			<div class=\"container card\">
+				<div class=\"card-content\">
 ";
 
 include_once 'displayRecipe.php';
 
-echo "		<div class=\"row\">
-				<div class=\"col s6 center\">
-					<form name=\"makeRecipe\" id=\"makeRecipe\" method=\"post\">
-						<input type=\"hidden\" name=\"cRecipeID\" value=\"".$randRecipe."\">
-						<input type=\"hidden\" name=\"cRecipeIDIndex\" value=\"".$curRecipeID."\">
-						<input type=\"submit\" name=\"makeRecipe\" value=\"Make Recipe\" onclick=\"\">	
-					</form>
+echo "			</div>
+			<div class=\"card-action\">
+				<div class=\"row\">
+					<div class=\"col s6 center\">
+						<form name=\"makeRecipe\" id=\"makeRecipe\" method=\"post\" action=\"#!\">
+							<input type=\"hidden\" name=\"cRecipeID\" value=\"". $randRecipe ."\">
+							<input type=\"hidden\" name=\"cRecipeIDIndex\" value=\"". $curRecipeID. "\">
+							<input type=\"submit\" name=\"makeRecipe\" value=\"Make Recipe\">	
+						</form>
+					</div>
+					<div class=\"col s6 center\">
+						<form name=\"newRecipe\" id=\"newRecipe\" method=\"post\" action=\"#\">
+							<input type=\"submit\" name=\"newRecipe\" value=\"Change Recipe\" onclick=\"return true\">	
+						</form>
+					</div>
 				</div>
-				<div class=\"col s6 center\">
-					<form name=\"newRecipe\" id=\"newRecipe\" method=\"post\">
-						<input type=\"submit\" name=\"newRecipe\" value=\"Change Recipe\" onclick=\"return true\">	
-					</form>
-				</div>
+			</div>
 			</div>
 		</main>
 	</body>

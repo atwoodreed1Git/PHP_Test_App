@@ -1,7 +1,9 @@
 <?php 
 
 include_once 'x.php';
-
+/******************************************************************
+* 
+******************************************************************/
 function getPantryItems()
 {
 	global $db;
@@ -31,14 +33,14 @@ $pantryItems = getPantryItems();
 
 include_once '../head.php';
 
-echo "<body>";
+echo "<body class=\"light-blue lighten-5\">";
 
 include_once '../headers/RecipePlannerHeader.php';
 include_once '../menu.php';
 
-echo "	<main class=\"light-blue lighten-5\">
+echo "	<main>
 			<br>
-			<div class=\"center border\">
+			<div class=\"container card-panel\">
 			<h3>Panrty Items</h3>
 ";
 
