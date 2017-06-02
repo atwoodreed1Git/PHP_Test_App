@@ -23,7 +23,7 @@ function getIngredients($curID)
 
 	$rID = $curID;
 
-	$curRecipe = $db->prepare('SELECT quantity_needed, lable, name FROM ingredient i JOIN recipe_ingredient ri ON i.id=ri.ingredient_id JOIN recipe r ON ri.recipe_id=r.id JOIN measurment m ON i.measurment_id=m.id WHERE r.id=:id;');
+	$curRecipe = $db->prepare('SELECT quantity_needed, label, name FROM ingredient i JOIN recipe_ingredient ri ON i.id=ri.ingredient_id JOIN recipe r ON ri.recipe_id=r.id JOIN measurement m ON i.measurement_id=m.id WHERE r.id=:id;');
 
 	$curRecipe->bindParam(':id', $curID, PDO::PARAM_INT);
 	
@@ -51,7 +51,7 @@ echo "		<div>
 
 foreach ($recipeIngredints as $row) {
 
-	echo $row['quantity_needed'] . " " . $row['lable'] . " " . $row['name'] . "
+	echo $row['quantity_needed'] . " " . $row['label'] . " " . $row['name'] . "
 					<br>
 ";
 }

@@ -56,7 +56,7 @@ function getRecipeName($m_ID, $recipeName) {
 	try {
 		global $db;
 
-		$findName = $db->prepare('SELECT name FROM ingredient WHERE measurment_id=:mID and name=:rname;');
+		$findName = $db->prepare('SELECT name FROM ingredient WHERE measurement_id=:mID and name=:rname;');
 
 		$findName->bindParam(':mID', $m_ID, PDO::PARAM_INT);
 		$findName->bindParam(':rname', $recipeName, PDO::PARAM_STR);
@@ -71,13 +71,13 @@ function getRecipeName($m_ID, $recipeName) {
 	}
 }
 
-function getMeasurmentID($me) {
+function getMeasurementID($me) {
 	try {
 		global $db;
 
-		$findID = $db->prepare('SELECT id FROM measurment WHERE lable=:measureLable;');
+		$findID = $db->prepare('SELECT id FROM measurement WHERE label=:measureLabel;');
 
-		$findID->bindParam(':measureLable', $me, PDO::PARAM_STR);
+		$findID->bindParam(':measureLabel', $me, PDO::PARAM_STR);
 		
 		$findID->execute();
 
@@ -93,7 +93,7 @@ function addIngredintT($aName, $aMeasureID) {
 	try {
 		global $db;
 
-		$toAdd = $db->prepare('INSERT INTO ingredient(name, measurment_id) VALUES (:a_n, :a_m_id)');
+		$toAdd = $db->prepare('INSERT INTO ingredient(name, measurement_id) VALUES (:a_n, :a_m_id)');
 
 		$toAdd->bindParam(':a_n', $aName, PDO::PARAM_STR);
 		$toAdd->bindParam(':a_m_id', $aMeasureID, PDO::PARAM_INT);
@@ -151,7 +151,7 @@ if (isset($_POST['submit']))
 	global $db;
 	$recipeTitle = $_POST['newTitle'];
 	$quant = $_POST['quantity'];
-	$measure = $_POST['measurment'];
+	$measure = $_POST['measurement'];
 	$ingredientsName = $_POST['ingreName'];
 	$instruct = $_POST['newInstruction'];
 	$reference = $_POST['newReference'];
@@ -173,8 +173,8 @@ if (isset($_POST['submit']))
 	foreach ($ingredientsName as $key => $i_name) {
 		// check to ensure the ingredient name is present
 		
-		// get the id of the measurment
-		$measureID = getMeasurmentID($measure[$key]);
+		// get the id of the measurement
+		$measureID = getMeasurementID($measure[$key]);
 
 		if (!$measureID)
 		{

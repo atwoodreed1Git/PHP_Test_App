@@ -2,13 +2,13 @@
 
 include_once 'x.php';
 
-function getMeasurmentID($me) {
+function getMeasurementID($me) {
 	try {
 		global $db;
 
-		$findID = $db->prepare('SELECT id FROM measurment WHERE lable=:measureLable;');
+		$findID = $db->prepare('SELECT id FROM measurement WHERE label=:measureLabel;');
 
-		$findID->bindParam(':measureLable', $me, PDO::PARAM_STR);
+		$findID->bindParam(':measureLabel', $me, PDO::PARAM_STR);
 		
 		$findID->execute();
 
@@ -40,7 +40,7 @@ function addIngredintT($aName, $aMeasureID) {
 	try {
 		global $db;
 
-		$toAdd = $db->prepare('INSERT INTO ingredient(name, measurment_id) VALUES (:a_n, :a_m_id)');
+		$toAdd = $db->prepare('INSERT INTO ingredient(name, measurement_id) VALUES (:a_n, :a_m_id)');
 
 		$toAdd->bindParam(':a_n', $aName, PDO::PARAM_STR);
 		$toAdd->bindParam(':a_m_id', $aMeasureID, PDO::PARAM_INT);
@@ -81,12 +81,12 @@ if (isset($_GET['submit']))
 {
 	global $db;
 	$quant = $_GET['quantity'];
-	$measure = $_GET['measurment'];
+	$measure = $_GET['measurement'];
 	$ingredientName = $_GET['ingreName'];
 
 //echo "<h1>q = ". $quant . " m = " .$measure . " name = " . $ingredientName . "</h1>";
 
-	$mid = getMeasurmentID($measure);
+	$mid = getMeasurementID($measure);
 
 	if (!$mid)
 	{

@@ -2,18 +2,18 @@
 
 include_once 'x.php';
 
-function getMeasurments()
+function getMeasurements()
 {
 	global $db;
 
-	$curRecipe = $db->prepare('SELECT * FROM measurment ORDER BY lable;');
+	$curRecipe = $db->prepare('SELECT * FROM measurement ORDER BY label;');
 	
 	$curRecipe->execute();
 
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-$measurmentList = getMeasurments();
+$measurementList = getMeasurements();
 
 include_once 'recipeHead.php';
 
@@ -40,12 +40,12 @@ echo "	<main>
 					 		</div>
 					 		
 					 		<div class=\"col s4\">
-					 			<label for=\"measurment\">Measurement Type</label>
-					 			<select class=\"browser-default\" name=\"measurment[]\">
+					 			<label for=\"measurement\">Measurement Type</label>
+					 			<select class=\"browser-default\" name=\"measurement[]\">
  ";
 
- foreach ($measurmentList as $item) {
- 	echo "									<option value=\"". $item['lable'] ."\">" . $item['lable'] . "</option>
+ foreach ($measurementList as $item) {
+ 	echo "									<option value=\"". $item['label'] ."\">" . $item['label'] . "</option>
  ";
  }
 

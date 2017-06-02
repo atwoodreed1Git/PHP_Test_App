@@ -10,25 +10,25 @@ function getPantryItems()
 
 	$rID = $curID;
 
-	$curRecipe = $db->prepare('SELECT quantity, lable, name FROM measurment m JOIN ingredient i ON m.id = i.measurment_id JOIN pantry p ON p.ingredient_id = i.id ORDER BY name;');
+	$curRecipe = $db->prepare('SELECT quantity, label, name FROM measurement m JOIN ingredient i ON m.id = i.measurement_id JOIN pantry p ON p.ingredient_id = i.id ORDER BY name;');
 
 	$curRecipe->execute();
 
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-function getMeasurments()
+function getMeasurements()
 {
 	global $db;
 
-	$curRecipe = $db->prepare('SELECT lable FROM measurment ORDER BY lable;');
+	$curRecipe = $db->prepare('SELECT label FROM measurement ORDER BY label;');
 	
 	$curRecipe->execute();
 
 	return $curRecipe->fetchall(PDO::FETCH_ASSOC);
 }
 
-$measurmentList = getMeasurments();
+$measurementList = getMeasurements();
 $pantryItems = getPantryItems();
 
 include_once '../head.php';
@@ -46,7 +46,7 @@ echo "	<main>
 
 foreach ($pantryItems as $row) {
 
-	echo $row['quantity'] . " " . $row['lable'] . " " . $row['name'] . "
+	echo $row['quantity'] . " " . $row['label'] . " " . $row['name'] . "
 			<br>
 ";
 }
@@ -63,12 +63,12 @@ echo "		<div>
 					 		</div>
 					 		
 					 		<div class=\"col s4\">
-					 			<label for=\"measurment\">Measurement Type</label>
-					 			<select class=\"browser-default\" name=\"measurment\">
+					 			<label for=\"measurement\">Measurement Type</label>
+					 			<select class=\"browser-default\" name=\"measurement\">
  ";
 
- foreach ($measurmentList as $item) {
- 	echo "							<option value=\"". $item['lable'] ."\">" . $item['lable'] . "</option>
+ foreach ($measurementList as $item) {
+ 	echo "							<option value=\"". $item['label'] ."\">" . $item['label'] . "</option>
  ";
  }
 
@@ -91,9 +91,5 @@ echo "									</select>
 	</body>
 </html>
 ";
-
-
-
-//								<input type=\"submit\" name=\"submit\" value\"+\" class=\"btn-floating btn-large waves-effect waves-light blue right\"></input>
 
 ?>
