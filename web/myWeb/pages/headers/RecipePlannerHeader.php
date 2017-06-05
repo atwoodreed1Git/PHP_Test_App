@@ -1,4 +1,5 @@
 <?php
+
  $curP = basename($_SERVER['PHP_SELF'],".php");
 
 echo "

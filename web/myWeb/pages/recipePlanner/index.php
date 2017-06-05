@@ -1,24 +1,26 @@
 <?php 
+
 session_start();
 
 include_once 'x.php';
-/***************************************************************
+
+/**************************************************************************************************
 * gets the id's of the oldest 5 recipes
-****************************************************************/
+**************************************************************************************************/
 function getListRecipesID() {
 	global $db;
 
-	$listRecipes = $db->prepare('SELECT id FROM recipe ORDER BY last_used DESC LIMIT 5;');
+	$listRecipes = $db->prepare('SELECT id FROM recipe ORDER BY last_used ASC LIMIT 5;');
 
 	$listRecipes->execute();
 
-	return $listRecipes->fetchall(PDO::FETCH_ASSOC);
+	return $listRecipes->fetchall(PDO::FETCH_NUM);
 }
 
-/***************************************************************
+/**************************************************************************************************
 * Update the date to the current date
-****************************************************************/
-function updateDate ($currentRecipeID) {
+**************************************************************************************************/
+function updateDate($currentRecipeID) {
 	global $db;
 
 	$qU = $db->prepare('UPDATE recipe SET last_used=CURRENT_DATE WHERE id=:uCid');
@@ -27,44 +29,41 @@ function updateDate ($currentRecipeID) {
 	$qU->execute();
 }
 
-/***************************************************************
-* keep track of the list of recipes to display
-****************************************************************/
-if (isset($_SESSION['recipeIDList']))
-{
-	$listIDs = $_SESSION['recipeIDList'];
-}
-else
-{
-	$IDs = getListRecipesID();
-	$_SESSION['recipeIDList'] = $IDs;
+// keep track of the list of recipes to display
+if (isset($_SESSION['recipeIDList']) && !empty($_SESSION['recipeIDList'])) {
 
-}
+	if (isset($_POST['newRecipe']) && !empty($_POST['newRecipe'])) {
 
-/***************************************************************
-* 
-****************************************************************/
-if (isset($_POST['makeRecipe'])) {
-	
-	// set the current index of the list of recipes 
-	if (isset($_POST['cRecipeID']))
-	{
-		$randRecipe = $_POST['cRecipeID'];
+		// want a different recipe 
+		$_SESSION['recipeIndex']++;
 	}
 
-	if (isset($_POST['cRecipeIDIndex']))
-	{
-		// update the date with the id
-		updateDate($_POST['cRecipeIDIndex']);	
+	// we reached the end of the list and we need a new one
+	if ($_SESSION['recipeIndex'] == 5) {
+		
+		$_SESSION['recipeIndex'] = 0;
+		$_SESSION['recipeIDList'] = getListRecipesID();
 	}
 }
 else {
 
-	// randomly choose a recipe to display
-	$randRecipe = rand(0,4);
+	// first load the page
+	$_SESSION['recipeIDList'] = getListRecipesID();
+	$_SESSION['recipeIndex'] = 0;
 }
 
-include_once '../head.php';
+$listIDs = $_SESSION['recipeIDList'];
+$rIndex = $_SESSION['recipeIndex'];
+$curRecipeID = $listIDs[$rIndex][0];
+
+// determine which button was clicked
+if (isset($_POST['makeRecipe']) && !empty($_POST['makeRecipe'])) {
+
+	// update the date with the id
+	updateDate($curRecipeID);	
+}
+
+include_once 'recipeHead.php';
 
 echo "<body class=\"light-blue lighten-5\">";
 
@@ -83,10 +82,8 @@ echo "			</div>
 			<div class=\"card-action\">
 				<div class=\"row\">
 					<div class=\"col s6 center\">
-						<form name=\"makeRecipe\" id=\"makeRecipe\" method=\"post\" action=\"#!\">
-							<input type=\"hidden\" name=\"cRecipeID\" value=\"". $randRecipe ."\">
-							<input type=\"hidden\" name=\"cRecipeIDIndex\" value=\"". $curRecipeID. "\">
-							<input type=\"submit\" name=\"makeRecipe\" value=\"Make Recipe\">	
+						<form name=\"makeRecipe\" id=\"makeRecipe\" method=\"post\" action=\"#\">
+							<input type=\"submit\" name=\"makeRecipe\" value=\"Make Recipe\" onclick=\"return true\">	
 						</form>
 					</div>
 					<div class=\"col s6 center\">

@@ -47,7 +47,7 @@ echo "									<a href=\"$baseDir"."pages/shopping/conformation.php\">Conformati
   			</li>
 ";
 ?>
-			<li class="<?php if ($curPage == "index") echo 'active'?>">
+			<li class="<?php if ($curPage == "index" || $curPage == "pantry" || $curPage == "addRecipe") echo 'active'?>">
 <?php
 echo "				<a href=\"$baseDir"."pages/recipePlanner/index.php\">Recipe Planner</a>
 			</li>

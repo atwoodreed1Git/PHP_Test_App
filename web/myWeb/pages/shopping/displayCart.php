@@ -1,7 +1,7 @@
 <?php 
 session_start(); 
 
-include_once '../head.php';
+include_once 'shopHead.php';
 
 echo " <body class=\"black\">";
 

@@ -29,13 +29,13 @@ $shoppingCart = array(array(item_id => 0,
 
 $numPossibleItems = count($shoppingCart);
 
-// store array in sesion
+// store array in session
 if (!isset($_SESSION['shopCart']))
 {
 	$_SESSION['shopCart'] = $shoppingCart;
 }
 
-include_once '../head.php';
+include_once 'shopHead.php';
 
 echo "<body class=\"black\">";
 

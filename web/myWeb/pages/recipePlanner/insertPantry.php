@@ -1,7 +1,8 @@
 <?php 
 
-include_once 'x.php';
-
+/**************************************************************************************************
+* gets the list of measurement id's for the drop down menu
+**************************************************************************************************/
 function getMeasurementID($me) {
 	try {
 		global $db;
@@ -20,14 +21,18 @@ function getMeasurementID($me) {
 	}
 }
 
+/**************************************************************************************************
+* gets the list of ingredient id's
+**************************************************************************************************/
 function getIngredintID($i_Name) {
 	try {
 		global $db;
-//echo "<h2>".$i_Name. "</h2>";
+
 		$newIngID = $db->prepare("SELECT id FROM ingredient WHERE name=:i_n;");
 		$newIngID->bindParam(':i_n', $i_Name, PDO::PARAM_STR);
 
 		$newIngID->execute();
+
 		return $newIngID->fetch();
 	}
 	catch (PDOException $e) {
@@ -36,6 +41,9 @@ function getIngredintID($i_Name) {
 	}
 }
 
+/**************************************************************************************************
+* adds a new ingredient and how it is measured
+**************************************************************************************************/
 function addIngredintT($aName, $aMeasureID) {
 	try {
 		global $db;
@@ -44,7 +52,7 @@ function addIngredintT($aName, $aMeasureID) {
 
 		$toAdd->bindParam(':a_n', $aName, PDO::PARAM_STR);
 		$toAdd->bindParam(':a_m_id', $aMeasureID, PDO::PARAM_INT);
-		
+			
 		$toAdd->execute();
 	}
 	catch (PDOException $e) {
@@ -53,13 +61,17 @@ function addIngredintT($aName, $aMeasureID) {
 	}
 }
 
+/**************************************************************************************************
+* add the quantity to the pantry
+**************************************************************************************************/
 function addPantryT($aIngreID, $aQuantity) {
 	try {
 		global $db;
+
 		$toAddQ = $db->prepare('INSERT INTO pantry(ingredient_id, quantity) VALUES (:a_r_id, :a_q);');
 
 		$toAddQ->bindParam(':a_r_id', $aIngreID, PDO::PARAM_INT);
-		$toAddQ->bindParam(':a_q', $aQuantity, PDO::PARAM_INT);
+		$toAddQ->bindParam(':a_q', $aQuantity, PDO::PARAM_STR);
 
 		$toAddQ->execute();
 	}
@@ -69,63 +81,75 @@ function addPantryT($aIngreID, $aQuantity) {
 	}
 }
 
-echo "<!DOCTYPE html>
-<html>
-<head>
-	<title>bob</title>
-</head>
-<body>
-";
+/**************************************************************************************************
+* add the quantity to the pantry
+**************************************************************************************************/
+function inPantryT($aIngreID, $aQuantity) {
+	try {
+		global $db;
+		
+		$inPantry = $db->prepare('SELECT id FROM pantry WHERE ingredient_id=:r_id AND quantity=:q;');
 
-if (isset($_GET['submit']))
-{
-	global $db;
-	$quant = $_GET['quantity'];
-	$measure = $_GET['measurement'];
-	$ingredientName = $_GET['ingreName'];
+		$inPantry->bindParam(':r_id', $aIngreID, PDO::PARAM_INT);
+		$inPantry->bindParam(':q', $aQuantity, PDO::PARAM_STR);
 
-//echo "<h1>q = ". $quant . " m = " .$measure . " name = " . $ingredientName . "</h1>";
+		$inPantry->execute();
 
-	$mid = getMeasurementID($measure);
-
-	if (!$mid)
-	{
-
-		header("Location: pantry.php?error=Please+select+a+valid+measurement.");
+		return $inPantry->fetch();
+	}
+	catch (PDOException $e) {
+		echo "Error: " . $e->getMessage();
 		die();
-		exit;
 	}
-
-	$ingredientID = getIngredintID($ingredientName);
-	
-	if (!$ingredientID)
-	{
-		// add new ingredient
-		addIngredintT($ingredientName, $mid[0]);
-
-		$newID = getIngredintID($ingredientName);
-		addPantryT($newID[0], $quant);
-	}
-	else
-	{
-		// update pantry
-		addPantryT($ingredientID[0], $quant);
-	}
-
-//echo "<h1> m id = " . $ingredientID[0] . "</h1>";
-
-
 }
 
-header("Location: pantry.php?b=k");
-die();
-exit;
-echo " insert recipe
+/**************************************************************************************************
+* Update the pantry quantity
+**************************************************************************************************/
+function updatePantryQantity($curI_ID, $newQantity) {
+	global $db;
 
-</body>
-</html>
-";
+	$qU = $db->prepare('UPDATE pantry SET quantity=:n_q WHERE ingredient_id=:uCid;');
+
+	$qU->bindParam(':uCid', $curI_ID, PDO::PARAM_INT);
+	$qU->bindParam(':n_q', $newQantity, PDO::PARAM_STR);
+
+	$qU->execute();
+}
+
+// error check the input
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+	include_once 'validateIngredient.php';
+
+	if ($qValid && $mValid && $nValid) {
+
+		$mid = getMeasurementID($measure);
+
+		if ($mid) {
+
+			if (!$ingredientID) {
+
+				// add new ingredient
+				addIngredintT($ingredientName, $mid[0]);
+
+				$newID = getIngredintID($ingredientName);
+				addPantryT($newID[0], $quant);
+			
+			} else {
+
+				// update pantry as long as it is not already in there
+				if (!inPantryT($aIngreID, $aQuantity)) {
+					
+					addPantryT($ingredientID[0], $quant);
+
+				} else {
+
+					updatePantryQantity($ingredientID[0], $quant);
+				}
+			}
+		}
+	}
+}
+
 ?>
-
-
-
