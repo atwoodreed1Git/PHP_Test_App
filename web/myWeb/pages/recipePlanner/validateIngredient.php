@@ -8,7 +8,7 @@ $qValid = $mValid = $nValid = false;
 // check the quantity
 if (empty($_POST['quantity'])) {
 
-	$qErr = "Quantity required";
+	$qErr = "Quantity is required";
 
 } elseif (filter_var($_POST['quantity'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "([^0-9 /]+)")))) {
 		

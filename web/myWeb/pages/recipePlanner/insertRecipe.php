@@ -1,5 +1,7 @@
 <?php 
 
+include_once '../formValidation.php';
+
 /**************************************************************************************************
 * get the id of the current ingredient
 **************************************************************************************************/
@@ -166,40 +168,44 @@ function addRecipeT($aTitle, $aInstruct, $aRef) {
 // error check
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-	$tErr = $iErr = $rErr = $title = $instruct = $reference = "";
-	$qErr = $mErr = $nErr = "";  // add 1 if needed
 	$quant = array();
 	$measure = array();
 	$ingredientName = array();	
 	$qValid = $mValid = $nValid = $tValid = $iValid = $rValid = false;
 
+	$tErr = $iErr = $rErr = $title = $instruct = $reference = "";
+	$qErr = $mErr = $nErr = "";
+
 	$quantL = $_POST['quantity'];
 	$measureL = $_POST['measurement'];
 	$nameL = $_POST['ingreName'];
+	var_dump($measureL);
 
 	// check the title
 	if (empty($_POST['newTitle'])) {
 
 		$tErr = "Title required";
+		$tErr = "Quantity is required";
+
 
 	} elseif (filter_var($_POST['newTitle'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "([^A-Za-z0-9 '&,-]+)")))) {
 			
 		$tErr = "Enter a valid Title that contains letters, spaces and these \'&,- symbols";
-	
+
 	} else {
 
 		$title = test_input($_POST['newTitle'], "[^A-Za-z0-9 '&,-]+");
 
-		// $isRecipeFound = getRecipeID($title);
+		$isRecipeFound = getRecipeID($title);
 
-		// if ($isRecipeFound)
-		// {
-		// 	$tErr = "We already have a recipe with that name. Please rename and try again\n";
+		if ($isRecipeFound)
+		{
+			$tErr = "We already have a recipe with that name. Please rename and try again\n";
 
-		// }	else {
+		}	else {
 
-		// 	$tValid = true;
-		// }
+			$tValid = true;
+		}
 	}
 
 	// check the instruction
@@ -210,10 +216,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	} else {
 
 		$instruct = test_input1($_POST['newInstruction']);
+		$_POST['newInstruction'] = $instruct;
 		$iValid = true;
 	}
 
-		// check the reference
+	//	check the reference
 	if (empty($_POST['newReference'])) {
 
 		$rErr = "Reference required";
@@ -224,108 +231,109 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$rValid = true;
 	}
 
-	// foreach ($quantL as $i => $q) {
+	foreach ($quantL as $i => $q) {
 
-	// 	if (empty($q[0])) {
+		if (empty($q[0])) {
 
-	// 		$qErr = "Quantity is required";
-	// 		$qValid = false;
+			$qErr = "Quantity is required";
+			$qValid = false;
 
-	// 	} elseif (filter_var($q[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "([^0-9 /]+)")))) {
+		} elseif (filter_var($q[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "([^0-9 /]+)")))) {
 				
-	// 		$qErr = "Enter a valid quantity like 1/2, 1, or 1 1/2";
-	// 		$qValid = false;
+			$qErr = "Enter a valid quantity like 1/2, 1, or 1 1/2";
+			$qValid = false;
 
-	// 	} else {
+		} else {
 
-	// 		$quant = test_input($q[0], "[^0-9 /]+]");
-	// 		$qValid = true;
-	// 	}
-	// }
+			$quant = test_input($q[0], "[^0-9 /]+]");
+			$qValid = true;
+		}
+	}
 
-	// foreach ($measureL as $i => $m) {
+	foreach ($measureL as $i => $m) {
 
-	// 	if (empty($m[0])) {
+		// if (empty($m[0])) {
+		// 	echo "fdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+		// 	$mErr = "Measurement is required";
+		// 	$mValid = false;
 
-	// 		$mErr = "Measurement is required";
-	// 		$mValid = false;
-
-	// 	} elseif (filter_var($m[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "/[^A-Za-z( ),]+/")))) {
+		// } else
+		if (filter_var($m[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "/[^A-Za-z( ),]+/")))) {
 				
-	// 		$mErr = "Please select a valid measurement";
-	// 		$mValid = false;
+			$mErr = "Please select a valid measurement";
+			$mValid = false;
 
-	// 	} else {
+		} else {
+			
+			$measure = test_input($m[0], "[^A-Za-z( ),]+");
+			$mValid = true;
+		}
+		// echo " m[".$i. "] = ".$m[0] . "<br>";
+	}
 
-	// 		$measure = test_input($m[0], "[^A-Za-z( ),]+");
-	// 		$mValid = true;
-	// 	}
-	// }
 
+	foreach ($nameL as $i => $n) {
 
-	// foreach ($nameL as $i => $n) {
+		if (empty($n[0])) {
 
-	// 	if (empty($n[0])) {
+			$nErr = "Ingredient Name is required";
+			$nValid = false;
 
-	// 		$nErr = "Ingredient Name is required";
-	// 		$nValid = false;
-
-	// 	} elseif (filter_var($n[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "/[^A-Za-z ,-]+/")))) {
+		} elseif (filter_var($n[0], FILTER_VALIDATE_REGEXP, array("options" => array("regexp"=> "/[^A-Za-z ,-]+/")))) {
 				
-	// 		$nErr = "Please enter a valid ingredient name that contains letters, spaces, commas, and -";
-	// 		$nValid = false;
+			$nErr = "Please enter a valid ingredient name that contains letters, spaces, commas, and -";
+			$nValid = false;
 
-	// 	} else {
+		} else {
 
-	// 		$ingredientsName = test_input($n[0], "[^A-Za-z ,-]+");
-	// 		$nValid = true;
-	// 	}
-	// }
+			$ingredientsName = test_input($n[0], "[^A-Za-z ,-]+");
+			$nValid = true;
+		}
+	}
 
 
 
 	if ($qValid && $mValid && $nValid && $tValid && $iValid && $rValid) {
-		echo "999999999999999999999999999999999999999999999999999999999999999999999999999999";
 
-		// $isRecipeFound = getRecipeID($title);
+		$isRecipeFound = getRecipeID($title);
 
-		// if (!$isRecipeFound)	{
+		if (!$isRecipeFound)	{
 
-		// 	// we have a new recipe so lets add it; add title, instructions and reference
-		// 	addRecipeT($title, $instruct, $reference);	
-		// }
+			// we have a new recipe so lets add it; add title, instructions and reference
+			addRecipeT($title, $instruct, $reference);	
+		}
 		
-		// foreach ($ingredientsName as $key => $i_name) {
-		// 	// check to ensure the ingredient name is present
+		foreach ($ingredientsName as $key => $i_name) {
+			// check to ensure the ingredient name is present
 			
-		// 	// get the id of the measurement
-		// 	$measureID = getMeasurementID($measure[$key]);
+			// get the id of the measurement
+			$measureID = getMeasurementID($measure[$key]);
 
-		// 	if ($measureID) {
+			if ($measureID) {
 
-		// 		$ingredientName = getRecipeName($measureID[0], $i_name);
+				$ingredientName = getRecipeName($measureID[0], $i_name);
 
-		// 		$curI_ID = getIngredintID($i_name);
-		// 		$curRID = getRecipeID($title);
+				$curI_ID = getIngredintID($i_name);
+				$curRID = getRecipeID($title);
 
-		// 		if ($ingredientName) {
+				if ($ingredientName) {
 
-		// 			// the ingredient is already there so just update the quantity
+					// the ingredient is already there so just update the quantity
 				
-		// 			// add quantity to recipe_ingredient
-		// 			addQuantityT($curI_ID[0], $curRID[0], $quant[$key]);
+					// add quantity to recipe_ingredient
+					addQuantityT($curI_ID[0], $curRID[0], $quant[$key]);
 
-		// 		} else {
+				} else {
 
-		// 			// name and id are new add them 
-		//  			addIngredintT($i_name, $measureID[0]);
+					// name and id are new add them 
+		 			addIngredintT($i_name, $measureID[0]);
 
-		// 			// modify the quantity
-		//  			$cID = getCurID();
-		//  			addQuantityT($cID[0], $curRID[0], $quant[$key]);	
-		// 		}	
-		// 	}
-		// }
+					// modify the quantity
+		 			$cID = getCurID();
+		 			addQuantityT($cID[0], $curRID[0], $quant[$key]);	
+				}	
+			}
+		}
 	}
 }
 

@@ -54,7 +54,7 @@ include_once '../menu.php';
 				 		<div class="col s4">
 				 			<label for="measurement">Measurement Type</label>
 				 			<select class="browser-default" name="measurement[]">
-				 			<option value="" disabled selected>Select a Measurement</option>
+				 			<!-- <option value=" " disabled selected>Select a Measurement</option> -->
 
 <?php
 
@@ -79,22 +79,22 @@ foreach ($measurementList as $item) {
 					</div>
 
 					 		<div class="col s4">
-							 		<span class="red-text"><?php echo $qErr; ?></span>
+						 		<span class="red-text"><?php echo $qErr; ?></span>
 					 		</div>
 
 					 		<div class="col s4">
-							 		<span class="red-text"><?php echo $mErr; ?></span>
+						 		<span class="red-text"><?php echo $mErr; ?></span>
 					 		</div>
 					 		
 					 		<div class="col s4">
-							 		<span class="red-text"><?php echo $nErr; ?></span>
+						 		<span class="red-text"><?php echo $nErr; ?></span>
 					 		</div>
 
 				</div>
 
 					<div>
 					 	<h4>Instructions</h4>
-					 	<textarea name="newInstruction" class="materialize-textarea" id="newInstruction" value="<?php if (isset($_POST['newInstruction'])) echo $_POST['newInstruction']; ?>"></textarea>
+					 	<textarea name="newInstruction" class="materialize-textarea" id="newInstruction" value="<?php echo $instruct; ?>"></textarea>
  				 		<span class="red-text"><?php echo $iErr; ?></span>
 					</div>
 					
@@ -122,6 +122,3 @@ foreach ($measurementList as $item) {
 	</main>
 </body>
 </html>
-";
-
- ?>
