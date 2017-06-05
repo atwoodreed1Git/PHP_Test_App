@@ -179,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$quantL = $_POST['quantity'];
 	$measureL = $_POST['measurement'];
 	$nameL = $_POST['ingreName'];
-	var_dump($measureL);
+	// var_dump($measureL);
 
 	// check the title
 	if (empty($_POST['newTitle'])) {
